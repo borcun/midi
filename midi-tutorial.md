@@ -275,7 +275,7 @@ En genel kontrolcu numaralari asagidaki gibidir:
 - 121 = Butun kontrolculer kapali (bu kanal icin olan tum kontrolcu degerlerini temizler, varsayilana donerler)\
 - 123 = Butun notalar kapali (guncel olarak calan butun notalari durdurur)
 
-__Ses ve Hiz__
+__Ses ve Hiz__\
 Ornegin; kanal 1'de calan enstruman icin ses seviyesi 100'e ayarlanmak isteniyorsa, asagidaki mesaj gonderilir:
 
  - **0xB0 0x07 0x64**
@@ -293,7 +293,7 @@ deger araliginda olurlar. Eger onlardan birisi yavas kalirsa, notalar dogru bir 
 diger deger maximum seviyede olabilir. Her iki deger efekti, notanin gercek gurultusunu belirlemek icin birbiri\
 ile carpimsaldir.
 
-__Enstruman Secimi__
+__Enstruman Secimi__\
 Daha onceden de gordugumuz gibi, bir sentezleyicide 'program change' mesajinin 128 degeri yardimi ile bir ses\
 secilebilir. Ses bank secim mesajlari (LSB ve MSB), 'program change' mesajina ek olarak kullanilabilir.
 
