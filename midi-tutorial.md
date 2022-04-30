@@ -1,9 +1,9 @@
-# MIDI Tutorial
+# MIDI Dersleri
 
 Bu MIDI dersi sana, MIDI protokolu kullanan herhangi bir cihazi kontrol etmek icin MIDI dilini nasil\
 kullanacagini anlaman konusunda yardimci olacaktir.
 
-## MIDI Tutorial Part 1 - MIDI Messages
+## MIDI Dersleri 1 - MIDI Mesajlari
 
 MIDI dili, bir muzik parcasinin banttan calinmasi icin gercek zamanli bilgi gondermek amaciyla\
 kullanilir.
@@ -33,7 +33,7 @@ programladiginda aradaki 1 fark olacaktir. (kanal "1" "0" olarak, kanal "10" "9"
 Ayni MIDI kablosunda, 16 adete kadar enstrumani bagimsiz olarak kontrol etmek icin 16 adete kadar\
 MIDI kanali olabilir.
 
-### MIDI RUNNING STATUS
+### MIDI RUNNING STATUS (MIDI Calisma Statusu)
 
 Bir MIDI mesaji okunurken, aslinda **STATUS byte** verisinin cikarilabilecegini bilmeniz gerekmektedir.\
 (Ilk mesaj icerisinde gonderilen, mesajin tipini soyleyen **STATUS byte** verisi haric)
@@ -49,7 +49,7 @@ veya crescendo volume curve (krisendo hacim egrisi).
 hedef synthesizer veya yazilimin bu durum bilgisini nasil aldigi ve onu iyi bir sekilde yorumladigi\
 konularinda dikkatli ve emin olmalisiniz.
 
-## MIDI Tutorial Part 2 - NOTE Messages
+## MIDI Dersleri 2 - NOTE Mesajlari
 
 Temel mesajlar **NOTE ON** ve **NOTE OFF** mesajlaridir.
 
@@ -61,7 +61,7 @@ baslar.
 
 **NOTE OFF** mesaji alindiginda, ilgili mesajdaki nota, sentezleyici tarafindan kapatilir.
 
-### NOTE ON - OFF
+### NOTE ON - OFF Mesajlari
 
 Her *NOTE ON* mesajinin bir *NOTE OFF* karsiligi olmalidir, aksi takdirde nota sonsuza kadar calacaktir.\
 Perkusyon enstrumanlari icin bir istisna vardir, bir perkusyon enstrumani sadece *NOTE ON* gonderebilir,\
@@ -118,7 +118,7 @@ Velocity degerinin sifir oldugu ozel bir durum vardir. Velocity degerinin 0 oldu
 "CCCC" ve "PPP PPPP" degerleri **NOTE ON** mesajindaki ile ayni anlamdadir. "VVV VVVV" degeri hizi\
 serbest birakma anlamina gelir ve nadiren kullanilir. Default olarak, 0 degerine ayarlanir.
 
-## MIDI Tutorial Part 3 - Playing notes and chords
+## MIDI Dersleri 3 - Nota ve Akor Calma
 
 Bir sentezleyiciye **NOTE ON** mesaji gonderdiginizde, bu nota calmaya baslar. Bu esnada, bir akor\
 duymak icin farkli nota pitch degerleri iceren baska **NOTE ON** mesajlari gonderebilirsiniz. Ancak,\
@@ -148,3 +148,36 @@ calabilmek icin sentezleyiciye gonderilecek MIDI mesajlarinin bir zaman siralama
 
 "t" saniye cinsinden zamani temsil eder. Dakikada 60 vurus ile calinir, bu nedenle her ceyrek nota 1\
 saniye surer.
+
+# MIDI Dersleri 4 - Enstruman Secimi
+Su ana kadar, sentezleyicilerin, notalari calabilmek icin hangi sesi kullanmalari gerektigi konusunda\
+hic bir sey soylenmedi. Sentezleyici, muhtemelen piyano veya kendisinin varsayilan enstrumanini kullanir.\
+
+Daha onceden tanimlanmis 128 adet ses listesinden bir enstruman secmek icin bir MIDI mesaji vardir.\
+Teoride her sentezleyici kendi enstruman listesine sahip olabilir, ancak General MIDI (GM) standarti\
+uyumlulugu basitlestiren 128 adet enstruman listesi tanimlar. Cogu sentezleyici en azindan GM standarti\
+ile uyumlu bir uyumluluk moduna sahiptir.
+
+Enstruman degistirmek` icin kullanilan MIDI mesajina "program degisimi" mesaji adi verilir. Mesaj, bir\
+**STATUS byte** bir de **DATA byte** alanindan olusur:
+
+- Status byte: 1100 CCCC
+- Data byte 1: 0XXX XXXX
+
+CCCC 0'dan 15'e kadar MIDI kanallarini temsil eder, XXX_XXXX 0'dan 127'e kadar enstruman numarasini temsil\
+eder. MIDI kanallarina benzer olarak, enstruman numaralari cogunlukla sentezleyicilerde ve GM listelerinde\
+gorulur, numaralar benzer sekilde 1 ekleme ve cikarma yontemi ile cevrilir.
+
+Ornegin, trampet enstrumaninin numarasi GM listesinde 57'dir, bu yuzden MIDI mesajinin XXX_XXXX kismi, hedef\
+sentezleyici dogru enstruman sesini cikarmak icin 56 degerine ayarlanmalidir.
+
+Mesajdan sonra sentezleyiciye gonderilen notalar trampet sesi ile calinir.
+
+### Enstruman Ses Kalitesi
+
+Fark ettiginiz uzere, hedef sentezleyiciye gonderilen MIDI mesajlari ses kalitesine dair herhangi bir\
+bilgi icermemektedir. Trampet enstrumanini secen bir MIDI mesaji alindiktan sonra, ucuz, dusuk kalite bir\
+ses karti sentezleyicisi oldukca kotu trampet sesi calarken, yuksek kalite bir ornekleyici guzel ve gercekci\
+bir trampet sesi calacaktir.
+
+## MIDI Dersleri 5 - Davul Enstrumanlari
