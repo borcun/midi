@@ -204,3 +204,49 @@ tabanda 64 sayisina denk gelir, bu deger mezzo forte farki civarinda bir hizi te
 
 ## MIDI Dersleri 6 - MIDI Kanallarinin Kullanilmasi
 
+MIDI protokolu 16 farkli MIDI kanalina kadar kullanabilir. Her kanalin kendi durum bilgisi vardir, ornegin;\
+kullanilacak enstruman tanimlanir, calinacak notalar belirlenir, ses ve panoramik gibi degerler ayarlanir vb\
+
+Farkli MIDI kanallari kullanilarak, her bir kanal icin belli bir enstruman tanimlanabilir. MIDI kanallarina\
+notalar gonderilerek, o kanaldaki enstruman sesi cikarilir.
+
+Asagida uc enstrumanli bir ornek bulunmaktadir.
+
+![Three Instruments](https://www.cs.cmu.edu/~music/cmsip/readings/MIDI%20tutorial%20for%20programmers_files/Midi-example-2.jpg)
+
+Saksafon, piyano ve bas davul, sirasi ile 1, 2 ve 10 numarali kanallari kullanacaklardir. Buna uygun MIDI mesaj\
+siralamasi asagida verilmektedir.
+
+Ilk olarak 'program change' mesaji gonderilir, bu sayede hangi kanalda hangi enstrumanin calinacagi belirtilir:
+
+- t=0 : **0xC0 0x41** (Alto Saksafon = 66 ==> 65 olarak kodlanir = 0x41)
+- t=0 : **0xC1 0x00** (Piano = 1 ==> 0 olarak kodlanir)
+- t=0 : **0xC9 0x00** (Standart Davul Kiti = 1 ==> 0 olarak kodlanir)
+
+Genel MIDI listesindeki davullar icin, 'program change' mesajinin verisi 1'dir (0 olarak kodlanir). Bazi\
+sentezleyiciler, Caz kitleri, Orkestral kitler, Elektro kitler gibi farkli davul seslerini de saglarlar.
+
+Sonrasinda, daha onceden aciklanan notalari gonderilir. Burada dikkat edilmesi gereken nokta, hizi 0 olan\
+**NOTE ON** mesajlari kullanilmasidir, bu mesaj **NOTE OFF** mesajina denk gelir. Bu mesaj pratikte siklikla\
+kullanilir.
+
+- t=0 : **0x90 0x48 0x40** (C4 Saksafonu baslat, pitch = 72)
+- t=0 : **0x91 0x3C 0x40** (C3 piyanoyu baslat, pitch = 60)
+- t=0 : **0x91 0x43 0x40** (G3 piyanoyu baslat, pitch = 67)
+- t=0 : **0x91 0x4C 0x40** (E4 piyanoyu baslat, pitch = 76)
+- t=0 : **0x99 0x23 0x40** (Bas davulu baslat, pitch = 35)
+- t=1 : **0x90 0x48 0x00** (C4 saksafonu durdur)
+- t=1 : **0x99 0x23 0x00** (Bas davulu durdur)
+- t=1 : **0x90 0x4A 0x40** (D4 saksafonu baslat, pitch = 74)
+- t=2 : **0x90 0x4A 0x00** (D4 saksafonu durdur)
+- t=2 : **0x90 0x4C 0x40** (E4 saksafonu baslat, pitch = 76)
+- t=2 : **0x99 0x23 0x40** (Bas davulu baslat)
+- t=3 : **0x90 0x4C 0x00** (E4 saksafonu durdur)
+- t=3 : **0x99 0x23 0x00** (Bas davulu durdur)
+- t=3 : **0x90 0x4F 0x40** (G4 saksafonu baslat, ptich = 79)
+- t=4 : **0x90 0x4F 0x00** (G4 saksafonu durdur)
+- t=4 : **0x91 0x3C 0x00** (C3 piyanoyu durdur)
+- t=4 : **0x91 0x43 0x00** (G3 piyanoyu durdur)
+- t=4 : **0x91 0x4C 0x00** (E4 piyanoyu durdur)
+
+## MIDI Dersleri 7 - MIDI Kontrolculeri
