@@ -11,7 +11,7 @@ kullanilir.
 Gercek zamanli terimi, bir mesajin, tam olarak hedef sentezleyici (donanimsal veya yazilimsal bir\
 sentezleyici olabilir) tarafindan yorumlanmasi gereken anda gonderilmesi anlamina gelmektedir.
 
-Bir muzigin banttan calinmasi icin gerekli olan bilgiyi gondermek icin farkli mesajlar tanimlanmistir.\
+Bir muzigin banttan calinmasi icin gerekli olan bilgiyi gondermek icin farkli mesajlar tanimlanmistir.
 
 Burada onemli olan nokta; MIDI dili sesin kendisini tanimlanamaz, ancak hedef sentezleyicideki sesi\
 yaratmak icin gerekli olan komutlar serisini tanimlar.
@@ -39,16 +39,15 @@ Bir MIDI mesaji okunurken, aslinda **STATUS byte** verisinin cikarilabilecegini 
 (Ilk mesaj icerisinde gonderilen, mesajin tipini soyleyen **STATUS byte** verisi haric)\
 
 Boyle bir durumda, sadece **DATA byte** verisini iceren mesaj alabilirsiniz. Akabinde, **STATUS byte**\
-verisinin, en son alinan **STATUS byte** verisi ile ayni oldugu kabul edilir.\
+verisinin, en son alinan **STATUS byte** verisi ile ayni oldugu kabul edilir.
 
 Bu surec *MIDI RUNNING STATUS* olarak isimlendirilir. Ayni mesajin, uzun bir seri icerisinde gonderildigi\
 durumlarda, veri transferini optimize etmek icin fayda saglamaktadir. Ornegin; pitch bend (zift kivrimi)\
-veya crescendo volume curve (krisendo hacim egrisi).\
+veya crescendo volume curve (krisendo hacim egrisi).
 
 *MIDI RUNNING STATUS* olayini, MIDI mesajlari urettiginiz zamanlarda da kullanabilirsiniz, ancak\
 hedef synthesizer veya yazilimin bu durum bilgisini nasil aldigi ve onu iyi bir sekilde yorumladigi\
 konularinda dikkatli ve emin olmalisiniz.\
-\
 
 ## MIDI Tutorial Part 2 - NOTE Messages
 
@@ -132,7 +131,7 @@ Bir ornege bakalim. Asagidaki notalari calmak icin gerekli olan MIDI mesajlari n
 ![Example](https://www.cs.cmu.edu/~music/cmsip/readings/MIDI%20tutorial%20for%20programmers_files/Midi-example-1.jpg)
 
 Muzigi duyabilmek icin zaman cizelgesine ihtiyac oldugu icin, kanal 1 uzerinden yukaridaki muzigi\
-calabilmek icin sentezleyiciye gonderilecek MIDI mesajlarinin bir zaman siralamai olmasi gerekir.\
+calabilmek icin sentezleyiciye gonderilecek MIDI mesajlarinin bir zaman siralamasi olmasi gerekir.
 
 - t=0 : 0x90 - 0x40 - 0x40 (Start of E3 note, pitch = 64)
 - t=0 : 0x90 - 0x43 - 0x40 (Start of G3 note, pitch= 67)
