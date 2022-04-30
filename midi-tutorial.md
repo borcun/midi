@@ -183,13 +183,13 @@ bir trampet sesi calacaktir.
 ## MIDI Dersleri 5 - Davul Enstrumanlari
 
 Davul enstrumanlari ozel bir durum olustururlar, cunku bu enstrumanlar, piyano veya trampet gibi belli ses\
-tonlarina sahip degillerdir. Ozel bir MIDI kanali, davul enstrumanlarinin playback'ini gondermek icin kullanilir.\
-Genel MIDI'de, bu kanal 10 numarali kanaldir, ancak davul seslerini almak icin baska kanallar kullanan\
-sentezleyiciler de bulabilirsiniz.
+tonlarina sahip degillerdir. Ozel bir MIDI kanali, davul enstrumanlarinin playback'ini gondermek icin\
+kullanilir. Genel MIDI'de, bu kanal 10 numarali kanaldir, ancak davul seslerini almak icin baska kanallar\
+kullanan sentezleyiciler de bulabilirsiniz.
 
 Davul enstrumanlarina kanal atamasi durumunda, (ayrica, genelde sentezleyicilerde ozel ses efektleri de dahil\
-edilir) uygun tonlu **NOTE ON** ve **NOTE OFF** mesajlari hangi davul veya ses efektinin calinacagini secmek icin\
-kullanilirlar.
+edilir) uygun tonlu **NOTE ON** ve **NOTE OFF** mesajlari hangi davul veya ses efektinin calinacagini secmek\
+icin kullanilirlar.
 
 Ornegin; 10 numarali kanalda bass davul enstrumani calmak icin asagidaki **NOTE ON** mesaji gonderilir.
 
@@ -214,8 +214,8 @@ Asagida uc enstrumanli bir ornek bulunmaktadir.
 
 ![Three Instruments](https://www.cs.cmu.edu/~music/cmsip/readings/MIDI%20tutorial%20for%20programmers_files/Midi-example-2.jpg)
 
-Saksafon, piyano ve bas davul, sirasi ile 1, 2 ve 10 numarali kanallari kullanacaklardir. Buna uygun MIDI mesaj\
-siralamasi asagida verilmektedir.
+Saksafon, piyano ve bas davul, sirasi ile 1, 2 ve 10 numarali kanallari kullanacaklardir. Buna uygun MIDI\
+mesaj siralamasi asagida verilmektedir.
 
 Ilk olarak 'program change' mesaji gonderilir, bu sayede hangi kanalda hangi enstrumanin calinacagi belirtilir:
 
@@ -250,3 +250,68 @@ kullanilir.
 - t=4 : **0x91 0x4C 0x00** (E4 piyanoyu durdur)
 
 ## MIDI Dersleri 7 - MIDI Kontrolculeri
+
+128 tane tanimlanmis MIDI kontrolcusu vardir, ancak pratikte onlardan sadece bir kaci kullanilir.\
+MIDI kontrolculerinin amaci, notalari calan sentezleyicilerdeki ses, panoramik (stereoda sesin soldan\
+saga dogru hareket etmesi gibi), eko gibi parametreleri ayarlamaktir.
+
+Asagidaki gibi bir mesaj yapisi insa edilir:
+
+- Status byte: 1011 CCCC
+- Data byte 1: 0NNN NNNN
+- Data byte 2: 0VVV VVVV
+
+CCCC kanal numarasi, NNN_NNNN kontrolcusu numarasi ve VVV_VVVV kontrolcuye atanan degeri temsil eder.
+
+En genel kontrolcu numaralari asagidaki gibidir:
+
+- 0 = Ses bank secimi (MSB)
+- 1 = Modulasyon tekerlegi, genelde vibrato veya tremolo efektlerine atanir
+- 7 = Enstrumanin ses seviyesi
+- 10 = Panoramik (0 = sol, 64 = orta, 127 = sag)
+- 11 = Aciklama (sentezleyiciye bagli olarak, bazen ses kontrolu icin kullanilir)
+- 32 = Ses bank secimi (LSB)
+- 64 = Surdurme pedali (Sustain pedal) (0 = pedal yok; >= 64 => pedal acik)
+- 121 = Butun kontrolculer kapali (bu kanal icin olan tum kontrolcu degerlerini temizler, varsayilana donerler)\
+- 123 = Butun notalar kapali (guncel olarak calan butun notalari durdurur)
+
+__Ses ve Hiz__
+Ornegin; kanal 1'de calan enstruman icin ses seviyesi 100'e ayarlanmak isteniyorsa, asagidaki mesaj gonderilir:
+
+ - **0xB0 0x07 0x64**
+
+Ses degisiminin, sonrasinda calacak notalar uzerinde de etkisi olur. Sentezleyici, ayarlanan ses seviyesini\
+degistirilene kadar saklar.
+
+Bir notanin hizi **NOTE ON** mesaji ile birlikte gonderilir. Nota calmaya basladigi anda hiz degeri degistirilemez,\
+bu yuzden nota calmaya basladiktan sonra o notanin seviyesini degistirmek icin ses kontrolcusu kullanilabilir.
+
+Bir kresendo (artarak hizlanan ses) yaratmak icin, artan ses degerlerinin gonderilmesi gerekmektedir.
+
+Kullanilan ses ve hiz degerleri arasindaki dengenin daima saglanmasi gerekir ki boylece her ikisi de dogru\
+deger araliginda olurlar. Eger onlardan birisi yavas kalirsa, notalar dogru bir sekilde duyulmayabilir, hatta\
+diger deger maximum seviyede olabilir. Her iki deger efekti, notanin gercek gurultusunu belirlemek icin birbiri\
+ile carpimsaldir.
+
+__Enstruman Secimi__
+Daha onceden de gordugumuz gibi, bir sentezleyicide 'program change' mesajinin 128 degeri yardimi ile bir ses\
+secilebilir. Ses bank secim mesajlari (LSB ve MSB), 'program change' mesajina ek olarak kullanilabilir.
+
+Bir sentezleyici bir yada daha fazla ses banki icerebilir, her bir bank 128 ses icerir. Eger sentezleyicinin\
+ozel bir ses banki kullanilmak istenirse, ilk olarak yeni bir bank aktive etmek ve akabinde 'program change'\
+mesaji gondermek gerekir.
+
+Ornek olarak, eger LSB=1, MSB=5 olan bir bankta, kanal 1'den 3 numarali ses kullanilmak istenirse, asagidaki\
+gibi bir MIDI mesaj serisi gonderilmelidir:
+
+- **0xB0 0x00 0x05** (MSB ses bank secimi)
+- **0xB0 0x20 0x01** (LSB ses bank secimi)
+- **0xC0 0x02** (guncel banktaki ses secimi)
+
+Bu mesaj serisi alindiktan sonra, sentezleyici ozel bir ses ile asagidaki notalari calacaktir.
+
+MSB ve LSB 0'dan 127'e kadar bir aralikta oldugu icin, toplamda secilebilecek 128 x 128 = 16384 olasi ses\
+banki vardir. Pratikte, sadece bir kac tanesi uygulanir.
+
+'program change' ve ses banklari uygunlugu hakkindaki bilgiler, kullanilan sentezleyicinin MIDI uygulama\
+cizelgesinde ve MIDI spesifikasyonunda bulunabilir.
