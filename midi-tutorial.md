@@ -36,7 +36,7 @@ MIDI kanali olabilir.
 ### MIDI RUNNING STATUS
 
 Bir MIDI mesaji okunurken, aslinda **STATUS byte** verisinin cikarilabilecegini bilmeniz gerekmektedir.\
-(Ilk mesaj icerisinde gonderilen, mesajin tipini soyleyen **STATUS byte** verisi haric)\
+(Ilk mesaj icerisinde gonderilen, mesajin tipini soyleyen **STATUS byte** verisi haric)
 
 Boyle bir durumda, sadece **DATA byte** verisini iceren mesaj alabilirsiniz. Akabinde, **STATUS byte**\
 verisinin, en son alinan **STATUS byte** verisi ile ayni oldugu kabul edilir.
@@ -47,7 +47,7 @@ veya crescendo volume curve (krisendo hacim egrisi).
 
 *MIDI RUNNING STATUS* olayini, MIDI mesajlari urettiginiz zamanlarda da kullanabilirsiniz, ancak\
 hedef synthesizer veya yazilimin bu durum bilgisini nasil aldigi ve onu iyi bir sekilde yorumladigi\
-konularinda dikkatli ve emin olmalisiniz.\
+konularinda dikkatli ve emin olmalisiniz.
 
 ## MIDI Tutorial Part 2 - NOTE Messages
 
