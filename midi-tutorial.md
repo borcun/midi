@@ -181,3 +181,26 @@ ses karti sentezleyicisi oldukca kotu trampet sesi calarken, yuksek kalite bir o
 bir trampet sesi calacaktir.
 
 ## MIDI Dersleri 5 - Davul Enstrumanlari
+
+Davul enstrumanlari ozel bir durum olustururlar, cunku bu enstrumanlar, piyano veya trampet gibi belli ses\
+tonlarina sahip degillerdir. Ozel bir MIDI kanali, davul enstrumanlarinin playback'ini gondermek icin kullanilir.\
+Genel MIDI'de, bu kanal 10 numarali kanaldir, ancak davul seslerini almak icin baska kanallar kullanan\
+sentezleyiciler de bulabilirsiniz.
+
+Davul enstrumanlarina kanal atamasi durumunda, (ayrica, genelde sentezleyicilerde ozel ses efektleri de dahil\
+edilir) uygun tonlu **NOTE ON** ve **NOTE OFF** mesajlari hangi davul veya ses efektinin calinacagini secmek icin\
+kullanilirlar.
+
+Ornegin; 10 numarali kanalda bass davul enstrumani calmak icin asagidaki **NOTE ON** mesaji gonderilir.
+
+- 0x99 0x23 0x40
+
+0x99, 10 numarali kanali kullanan **NOTE ON** mesaji icin **STATUS byte** degeridir. 0x23 onluk tabanda 35\
+degerine denk gelir, bu deger GM listesinde akustik bas davul icin kullanilan nota numarasidir. 0x40 onluk\
+tabanda 64 sayisina denk gelir, bu deger mezzo forte farki civarinda bir hizi temsil eder. Sonrasinda,\
+**NOTEO OFF** mesajininin da gonderilmek gerekir:
+
+- 0x89 0x23 0x00
+
+## MIDI Dersleri 6 - MIDI Kanallarinin Kullanilmasi
+
