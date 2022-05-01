@@ -360,15 +360,16 @@ sentezleyiciler bu mesajlara cevap vermezler.
 
 __2 - MIDI Reset Mesaji__\
 Bu mesaj, data kismi olmayan bir status mesajidir, **0xFF**. Mesaj, sentezleyiciyi power-on varsayilanina getirir,\
-boylece calan butun notalar durur. Bu mesaji fazla kullanmamak gerekir, cunku mesaj sentezleyici tamamiyle resetler,\
-sadece calan notalari durdurmaz.
+boylece calan butun notalar durur. Bu mesaji fazla kullanmamak gerekir, cunku mesaj sentezleyici tamamiyle\
+resetler, sadece calan notalari durdurmaz.
 
 __3 - MIDI NOTE OFF__\
-Her bir kanal ve nota pitch degeri icin her kanala bir adet MIDI NOTE OFF mesaji gonderilir. Bu tam bir cozum olmasina\
-ragmen kullanilan MIDI donanimina gore bazi reaksiyon zamanlarina sahip olan bir cok MIDI mesajinin gonderilmesi gerekir.
+Her bir kanal ve nota pitch degeri icin her kanala bir adet MIDI NOTE OFF mesaji gonderilir. Bu tam bir cozum\
+olmasina ragmen kullanilan MIDI donanimina gore bazi reaksiyon zamanlarina sahip olan bir cok MIDI mesajinin\
+gonderilmesi gerekir.
 
 __4 - MIDI NOTE OFF - Optimized__\
 Bu durumda, her kanal icin gonderilen **NOTE ON** ve **NOTE OFF** mesajlarinin kayitlarini tutmak icin bir tablo\
-kullanilabilir. Her kanal icin 128 byte degerinde bir buffer kullanilabilir, bu buffer gonderilen **NOTE ON** mesajlarinin\
-sayisini tutar ve her **NOTE ON** mesajinda artirilip her **NOTE OFF** mesajinda azaltilir. Akabinde, tum notalari\
-resetlemek istedigimizde, basitce tabloya gidip calan notalar icin **NOTE OFF** mesajlari gonderilir.
+kullanilabilir. Her kanal icin 128 byte degerinde bir buffer kullanilabilir, bu buffer gonderilen **NOTE ON**\
+mesajlarinin sayisini tutar ve her **NOTE ON** mesajinda artirilip her **NOTE OFF** mesajinda azaltilir. Akabinde,\
+tum notalari resetlemek istedigimizde, basitce tabloya gidip calan notalar icin **NOTE OFF** mesajlari gonderilir.
