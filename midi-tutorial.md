@@ -1,4 +1,4 @@
-![Orjinal Dokuman Adresi](https://www.cs.cmu.edu/~music/cmsip/readings/MIDI%20tutorial%20for%20programmers.html)
+[Orjinal Dokuman Adresi](https://www.cs.cmu.edu/~music/cmsip/readings/MIDI%20tutorial%20for%20programmers.html)
 
 # MIDI Dersleri
 
