@@ -1,3 +1,5 @@
+![Orjinal Dokuman Adresi](https://www.cs.cmu.edu/~music/cmsip/readings/MIDI%20tutorial%20for%20programmers.html)
+
 # MIDI Dersleri
 
 Bu MIDI dersi sana, MIDI protokolu kullanan herhangi bir cihazi kontrol etmek icin MIDI dilini nasil\
@@ -344,3 +346,39 @@ Ornegin; bir notayi yarim nota bukmek icin, 0x3000 degeri gonderilmelidir:
 Aslinda, 0x3000 degeri, MSB ve LSB parcalari icin 0x60 ve 0x00 olan iki adet 7 bitlik degere bolunmelidir.
 
 ## MIDI Dersleri 9 - Notalarin Resetlenmesi (Resetting notes)
+
+Gordugumuz uzere, butun **NOTE ON** mesajlarina karsilik gelen **NOTE OFF** mesajlari olmalidir, aksi takdirde\
+notalar sonsuza kadar calmaya devam edecektir.
+
+Calan notanin resetlenmek istenildigi durumlar olabilir. Bunu yapabilmek icin temel olarak 4 yol vardir. Bazi\
+sentezleyiciler bu yollarin hepsini kabul etmezler, bu yuzden farkli olasiliklari sunmak ilgi cekici olur.
+
+__1 - MIDI Kontrolcu 123 Kullanmak__\
+Bir MIDI kanalindan MIDI Controller 123 mesaji gonderilirse, sentezleyici kanalda calan tum notalari durdurur.\
+Butun MIDI kanallarini resetlemek icin, her kanala mesaj gonderilir. Dikkat edilmesi gereken nokta, butun\
+sentezleyiciler bu mesajlara cevap vermezler.
+
+__2 - MIDI Reset Mesaji__\
+Bu mesaj, data kismi olmayan bir status mesajidir, **0xFF**. Mesaj, sentezleyiciyi power-on varsayilanina getirir,\
+boylece calan butun notalar durur. Bu mesaji fazla kullanmamak gerekir, cunku mesaj sentezleyici tamamiyle resetler,\
+sadece calan notalari durdurmaz.
+
+__3 - MIDI NOTE OFF__\
+Her bir kanal ve nota pitch degeri icin her kanala bir adet MIDI NOTE OFF mesaji gonderilir. Bu tam bir cozum olmasina\
+ragmen kullanilan MIDI donanimina gore bazi reaksiyon zamanlarina sahip olan bir cok MIDI mesajinin gonderilmesi gerekir.
+
+__4 - MIDI NOTE OFF - Optimized__
+Bu durumda, her kanal icin gonderilen **NOTE ON** ve **NOTE OFF** mesajlarinin kayitlarini tutmak icin bir tablo\
+kullanilabilir. Her kanal icin 128 byte degerinde bir buffer kullanilabilir, bu buffer gonderilen **NOTE ON** mesajlarinin\
+sayisini tutar ve her **NOTE ON** mesajinda artirilip her **NOTE OFF** mesajinda azaltilir. Akabinde, tum notalari\
+resetlemek istedigimizde, basitce tabloya gidip calan notalar icin **NOTE OFF** mesajlari gonderilir.
+
+
+
+
+
+
+
+
+
+.
