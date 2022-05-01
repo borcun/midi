@@ -315,3 +315,32 @@ banki vardir. Pratikte, sadece bir kac tanesi uygulanir.
 
 'program change' ve ses banklari uygunlugu hakkindaki bilgiler, kullanilan sentezleyicinin MIDI uygulama\
 cizelgesinde ve MIDI spesifikasyonunda bulunabilir.
+
+## MIDI Dersleri 8 -  Pitch Bend (Perde Bukme)
+
+'Pitch Bend' mesaji, guncel MIDI kanalinda calan notanin perdesini degistirmek icin kullanilir. Asagida\
+ornek bir mesaj gosterilmektedir:
+
+- Status byte : 1110 CCCC
+- Data byte 1 : 0LLL LLLL
+- Data byte 2 : 0MMM MMMM
+
+CCCC, MIDI kanalini temsil eder, LLL_LLLL perde bukme degerinin LSB'si, MMM_MMMM ise MSB'sidir. Perde\
+bukmenin 14 bitlik degeri tanimlanir, bu sayede 0x2000 degeri notanin normal perdesine denk gelir.\
+(pitch degisikligi olmaz). 0x2000 uzerindeki sayilari kullanmak (0x3FFFF'e kadar) pitch degerini artirir,\
+bu degerin altinda bir deger (0x0000'a kadar) pitch degerinin azaltir. 'Pitch change' araligi simetriktir\
+ve sentezleyici icerisinde kendi kendine siklikla ayarlanabilir. En yaygin aralik degeri, standart nota\
+pitch degeri civarinda +/-2 yarim tondur.
+
+'Pitch Bend' genelde glissando ve gitar bukme efektleri yaratmak icin kullanilir. Bunu yapabilmek icin\
+'Pitch Bend' mesajinin surekli seri olarak gonderilmesi gerekmektedir. Gercek zamanli pitch degerini\
+degistirebilmek icin, bu islem yeteri kadar siklikta yapilmalidir, boylelikle kulak curve (kivrim, egri)\
+icerisinde fazla adimlari duymaz.
+
+Ornegin; bir notayi yarim nota bukmek icin, 0x3000 degeri gonderilmelidir:
+
+- **0xE0 0x00 0x60**
+
+Aslinda, 0x3000 degeri, MSB ve LSB parcalari icin 0x60 ve 0x00 olan iki adet 7 bitlik degere bolunmelidir.
+
+## MIDI Dersleri 9 - Notalarin Resetlenmesi (Resetting notes)
